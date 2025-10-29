@@ -1,11 +1,11 @@
-package psjw.board.articleread;
+package psjw.board.article;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ViewApplication {
+public class LikeApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ViewApplication.class, args);
+        SpringApplication.run(LikeApplication.class, args);
     }
 }
