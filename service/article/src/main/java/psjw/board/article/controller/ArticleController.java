@@ -8,6 +8,8 @@ import psjw.board.article.service.request.ArticleUpdateRequest;
 import psjw.board.article.service.response.ArticlePageResponse;
 import psjw.board.article.service.response.ArticleResponse;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ArticleController {
@@ -23,8 +25,17 @@ public class ArticleController {
             @RequestParam("boardId") Long boardId,
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize
-                                       ){
+    ) {
         return articleService.readAll(boardId, page, pageSize);
+    }
+
+    @GetMapping("/v1/articles/infinite-scroll")
+    public List<ArticleResponse> readAllInfiniteScroll(
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("pageSize") Long pageSize,
+            @RequestParam(value = "lastArticleId", required = false) Long lastArticleId
+    ) {
+            return articleService.readAllInfiniteScroll(boardId, pageSize, lastArticleId);
     }
 
 
