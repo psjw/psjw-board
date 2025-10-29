@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
+import psjw.board.article.entity.Article;
+import psjw.board.article.service.response.ArticlePageResponse;
 import psjw.board.article.service.response.ArticleResponse;
 
 public class ArticleApiTest {
@@ -38,12 +40,7 @@ public class ArticleApiTest {
         System.out.println("response = " + response);
     }
 
-    @Test
-    void deleteTest(){
-        restClient.delete()
-                .uri("/v1/articles/{articleId}", 241866106913931264L)
-                .retrieve();
-    }
+
 
     void update(Long articleId){
         restClient.put()
@@ -60,6 +57,27 @@ public class ArticleApiTest {
                 .retrieve()
                 .body(ArticleResponse.class);
     }
+
+    @Test
+    void deleteTest(){
+        restClient.delete()
+                .uri("/v1/articles/{articleId}", 241866106913931264L)
+                .retrieve();
+    }
+
+    @Test
+    void readAllTest(){
+        ArticlePageResponse response = restClient.get()
+                .uri("/v1/articles?boardId=1&pageSize=30&page=50000")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        System.out.println("response.getArticleCount() = " + response.getArticleCount());
+        for(ArticleResponse article : response.getArticles()) {
+            System.out.println("articleId() = " + article.getArticleId());
+        }
+    }
+
 
 
     @Getter

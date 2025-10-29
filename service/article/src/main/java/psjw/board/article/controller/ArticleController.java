@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import psjw.board.article.service.ArticleService;
 import psjw.board.article.service.request.ArticleCreateRequest;
 import psjw.board.article.service.request.ArticleUpdateRequest;
+import psjw.board.article.service.response.ArticlePageResponse;
 import psjw.board.article.service.response.ArticleResponse;
 
 @RestController
@@ -16,6 +17,16 @@ public class ArticleController {
     public ArticleResponse read(@PathVariable Long articleId) {
         return articleService.read(articleId);
     }
+
+    @GetMapping("/v1/articles")
+    public ArticlePageResponse readAll(
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("page") Long page,
+            @RequestParam("pageSize") Long pageSize
+                                       ){
+        return articleService.readAll(boardId, page, pageSize);
+    }
+
 
     @PostMapping("/v1/articles")
     public ArticleResponse create(@RequestBody ArticleCreateRequest request) {
